@@ -42,12 +42,14 @@ class HanoiGame: public MyTower {
     int option;
     int disk;
     int tempDisk;
+    int auxDisk;
     
     void addNumDisks() {
       do {
         system("clear");
         cout << "Type a digit between 3 and 7:" << endl;
         cin >> option;
+        system("clear");
       } while (option < 3 || option > 7);
 
       for (int i = option; i >= 1; i--) {
@@ -77,6 +79,7 @@ class HanoiGame: public MyTower {
       cout << "2. Middle Tower." << endl;
       cout << "3. Right Tower." << endl;
       cin >> option;
+      system("clear");
       switch(option) {
         case 1:
           if (towerLeft.showEmpty()) {
@@ -86,6 +89,7 @@ class HanoiGame: public MyTower {
             moveDisk();
           } else {
             cout << "You select the Left Tower." << endl;
+            auxDisk = 0;
             setDisk();
           }
           break;
@@ -96,6 +100,7 @@ class HanoiGame: public MyTower {
             showTowers();
             moveDisk();
           } else {
+            auxDisk = 0;
             cout << "You select the Middel Tower." << endl;
             setDisk();
           }
@@ -107,6 +112,7 @@ class HanoiGame: public MyTower {
             showTowers();
             moveDisk();
           } else {
+            auxDisk = 0;
             cout << "You select the Right Tower." << endl;
             setDisk();
           }
@@ -118,13 +124,14 @@ class HanoiGame: public MyTower {
     }
 
     void setDisk() {
-      if ( option == 1 ) {
+      showTowers();
+      if ( option == 1 && auxDisk == 0 ) {
         tempDisk = towerLeft.showTop();
         towerLeft.popItem();
-      } else if ( option == 2 ) {
+      } else if ( option == 2 && auxDisk == 0 ) {
         tempDisk = towerMiddle.showTop();
         towerMiddle.popItem();
-      } else if ( option == 3 ) {
+      } else if ( option == 3 && auxDisk == 0) {
         tempDisk = towerRight.showTop();
         towerRight.popItem();
       }
@@ -137,22 +144,47 @@ class HanoiGame: public MyTower {
       cin >> option;
       switch( option ){
         case 1:
-          cout << "You place the disk in the Left Tower." << endl;
-          towerLeft.pushItem(tempDisk); 
+          system("clear");
+          if ( towerLeft.showEmpty() || towerLeft.showTop() > tempDisk ) {
+            cout << "You place the disk in the Left Tower." << endl;
+            towerLeft.pushItem(tempDisk); 
+          } else {
+            cout << "You can't place the disk " << tempDisk << " here try in another Tower." << endl;
+            auxDisk = 1;
+            setDisk();
+          }
           break;
         case 2:
-          cout << "You place the disk in the Middle Tower." << endl;
-          towerMiddle.pushItem(tempDisk); 
+          system("clear");
+          if ( towerMiddle.showEmpty() || towerMiddle.showTop() > tempDisk ) {
+            cout << "You place the disk in the Middle Tower." << endl;
+            towerMiddle.pushItem(tempDisk); 
+          } else {
+            cout << "You can't place the disk " << tempDisk << " here try in another Tower." << endl;
+            auxDisk = 1;
+            setDisk();
+          }
           break;
         case 3:
-          cout << "You place the disk in the Right Tower." << endl;
-          towerRight.pushItem(tempDisk); 
+          system("clear");
+          if ( towerRight.showEmpty() || towerRight.showTop() > tempDisk ) {
+            cout << "You place the disk in the Right Tower." << endl;
+            towerRight.pushItem(tempDisk); 
+          } else {
+            cout << "You can't place the disk " << tempDisk << " here try in another Tower." << endl;
+            auxDisk = 1;
+            setDisk();
+          }
           break;
         default:
           cout << "Invalid option." << endl;
       }
+      if ( (towerLeft.showEmpty() && towerMiddle.showEmpty()) || (towerLeft.showEmpty() && towerRight.showEmpty()) ) {
+        cout << "You Win!!!" << endl;
+      } else {
       showTowers();
       moveDisk();
+      }
     }
 };
 
