@@ -6,6 +6,16 @@ class MyTower {
   public:
     stack<int> tower;
     stack<int> auxTower;
+    string rows[7] = {
+              "_______|||_______",
+              "______|||||______", 
+              "_____|||||||_____", 
+              "____|||||||||____", 
+              "___|||||||||||___", 
+              "__|||||||||||||__", 
+              "_|||||||||||||||_"
+    };
+
     void pushItem(int item) {
       tower.push(item);
     }
@@ -17,7 +27,7 @@ class MyTower {
     void showItem() {
       auxTower = tower;
       while (!auxTower.empty()) {
-        cout << auxTower.top() << endl;
+        cout << rows[auxTower.top() - 1] << endl;
         auxTower.pop();
       }
     }
@@ -60,15 +70,15 @@ class HanoiGame: public MyTower {
     void showTowers() {
       cout << "Left Tower:" << endl;
       towerLeft.showItem();
-      cout << "-_-_-_-_-_" << endl;
+      cout << "-/-/-/base/-/-/-/" << endl;
       cout << endl;
       cout << "Middle Tower:" << endl;
       towerMiddle.showItem();
-      cout << "-_-_-_-_-_" << endl;
+      cout << "-/-/-/base/-/-/-/" << endl;
       cout << endl;
       cout << "Right Tower:" << endl;
       towerRight.showItem();
-      cout << "-_-_-_-_-_" << endl;
+      cout << "-/-/-/base/-/-/-/" << endl;
       cout << endl;
 
     }
@@ -149,7 +159,7 @@ class HanoiGame: public MyTower {
             cout << "You place the disk in the Left Tower." << endl;
             towerLeft.pushItem(tempDisk); 
           } else {
-            cout << "You can't place the disk " << tempDisk << " here try in another Tower." << endl;
+            cout << "You can't place the disk " << rows[tempDisk - 1] << " here try in another Tower." << endl;
             auxDisk = 1;
             setDisk();
           }
@@ -160,7 +170,7 @@ class HanoiGame: public MyTower {
             cout << "You place the disk in the Middle Tower." << endl;
             towerMiddle.pushItem(tempDisk); 
           } else {
-            cout << "You can't place the disk " << tempDisk << " here try in another Tower." << endl;
+            cout << "You can't place the disk " << rows[tempDisk - 1] << " here try in another Tower." << endl;
             auxDisk = 1;
             setDisk();
           }
@@ -171,7 +181,7 @@ class HanoiGame: public MyTower {
             cout << "You place the disk in the Right Tower." << endl;
             towerRight.pushItem(tempDisk); 
           } else {
-            cout << "You can't place the disk " << tempDisk << " here try in another Tower." << endl;
+            cout << "You can't place the disk " << rows[tempDisk - 1] << " here try in another Tower." << endl;
             auxDisk = 1;
             setDisk();
           }
@@ -182,8 +192,8 @@ class HanoiGame: public MyTower {
       if ( (towerLeft.showEmpty() && towerMiddle.showEmpty()) || (towerLeft.showEmpty() && towerRight.showEmpty()) ) {
         cout << "You Win!!!" << endl;
       } else {
-      showTowers();
-      moveDisk();
+        showTowers();
+        moveDisk();
       }
     }
 };
